@@ -1,1 +1,286 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunal Gurav - Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        /* Custom CSS for mouse follower and general styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll due to mouse follower */
+            cursor: none; /* Hide default cursor */
+        }
+        .mouse-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #6366f1; /* Indigo-500 */
+            border-radius: 50%;
+            pointer-events: none; /* Allow clicks on elements beneath */
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.1s ease-out, width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s ease-out;
+            opacity: 0.8;
+            mix-blend-mode: difference; /* Blends with background for cool effect */
+        }
+        .mouse-follower.active {
+            width: 40px;
+            height: 40px;
+            background-color: #a78bfa; /* Violet-400 */
+        }
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1; /* Send to background */
+            overflow: hidden;
+        }
+        .section {
+            min-height: 100vh; /* Each section takes at least full viewport height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* For z-index to work against Three.js */
+            padding: 4rem 0;
+        }
+        /* Ensure content is readable over Three.js background */
+        .content-overlay {
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .content-overlay {
+                max-width: 700px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <div id="three-container"></div>
+
+    <div class="mouse-follower"></div>
+
+    <header class="section relative z-10">
+        <div class="content-overlay text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-indigo-400">Kunal Gurav</h1>
+            <p class="text-xl md:text-2xl text-gray-300">Web Developer | E-commerce Specialist</p>
+            <p class="text-md md:text-lg text-gray-400 mt-2">Crafting digital experiences that stand out.</p>
+            <a href="#services" class="mt-8 inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out">
+                Explore My Work
+            </a>
+        </div>
+    </header>
+
+    <section id="services" class="section relative z-10 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="content-overlay text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 text-violet-400">My Services</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold mb-3 text-white">Web Development</h3>
+                    <p class="text-gray-300">
+                        Building responsive, modern, and high-performance websites tailored to your needs.
+                        From personal portfolios to complex web applications.
+                    </p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold mb-3 text-white">E-commerce Web Development</h3>
+                    <p class="text-gray-300">
+                        Creating robust and secure online stores that drive sales.
+                        Specializing in user-friendly interfaces and seamless checkout experiences.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section relative z-10 bg-gradient-to-b from-gray-800 to-gray-900">
+        <div class="content-overlay text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 text-emerald-400">Pricing</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold mb-3 text-white">Static Website</h3>
+                    <p class="text-gray-300 mb-4">Perfect for portfolios, landing pages, and informational sites.</p>
+                    <p class="text-4xl font-bold text-emerald-300">₹5000</p>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-lg shadow-xl transform hover:scale-105 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold mb-3 text-white">Dynamic Website</h3>
+                    <p class="text-gray-300 mb-4">Ideal for blogs, e-commerce stores, and interactive web applications.</p>
+                    <p class="text-4xl font-bold text-emerald-300">₹7000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section relative z-10">
+        <div class="content-overlay text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 text-indigo-400">Get in Touch</h2>
+            <p class="text-lg text-gray-300 mb-6">Ready to start your next project? Let's connect!</p>
+            <a href="mailto:your.email@example.com" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out">
+                Email Me
+            </a>
+            <p class="text-sm text-gray-500 mt-8">© 2025 Kunal Gurav. All rights reserved.</p>
+        </div>
+    </section>
+
+    <script>
+        // --- Mouse Follower Logic ---
+        const mouseFollower = document.querySelector('.mouse-follower');
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
+        const speed = 0.1; // Smoothness of the follower
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Add hover effect for interactive elements
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => mouseFollower.classList.add('active'));
+            el.addEventListener('mouseleave', () => mouseFollower.classList.remove('active'));
+        });
+
+        function animateMouseFollower() {
+            // Lerp interpolation for smooth movement
+            followerX += (mouseX - followerX) * speed;
+            followerY += (mouseY - followerY) * speed;
+            mouseFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+            requestAnimationFrame(animateMouseFollower);
+        }
+        animateMouseFollower(); // Start the mouse follower animation
+
+        // --- Three.js Background Logic ---
+        let scene, camera, renderer, particles, particleMaterial, geometry;
+        let mouse = { x: 0, y: 0 };
+        const threeContainer = document.getElementById('three-container');
+
+        function initThreeJS() {
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent background
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            threeContainer.appendChild(renderer.domElement);
+
+            // Particles
+            geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const particleCount = 2000; // More particles for a denser effect
+
+            for (let i = 0; i < particleCount; i++) {
+                const x = (Math.random() - 0.5) * 200;
+                const y = (Math.random() - 0.5) * 200;
+                const z = (Math.random() - 0.5) * 200;
+                vertices.push(x, y, z);
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            particleMaterial = new THREE.PointsMaterial({
+                color: 0x888888, // Grayish particles
+                size: 0.1,
+                transparent: true,
+                opacity: 0.7,
+                blending: THREE.AdditiveBlending // For glow effect
+            });
+
+            particles = new THREE.Points(geometry, particleMaterial);
+            scene.add(particles);
+
+            // Add a simple cube for interaction demonstration
+            const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+            const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x6366f1, wireframe: true });
+            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            scene.add(cube);
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            window.addEventListener('scroll', onDocumentScroll, false);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onDocumentMouseMove(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function onDocumentScroll() {
+            // Simple scrolling effect: adjust camera position or particle rotation
+            const scrollY = window.scrollY;
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollProgress = scrollY / totalHeight;
+
+            // Rotate particles based on scroll progress
+            if (particles) {
+                particles.rotation.y = scrollProgress * Math.PI * 2; // Full rotation over full scroll
+                particles.rotation.x = scrollProgress * Math.PI;
+            }
+
+            // Move cube based on scroll
+            const cube = scene.children.find(obj => obj.type === 'Mesh');
+            if (cube) {
+                cube.position.y = -scrollProgress * 5; // Move cube up/down
+                cube.rotation.z = scrollProgress * Math.PI * 4;
+            }
+
+            // Adjust camera position slightly for parallax effect
+            camera.position.z = 5 + scrollProgress * 2;
+        }
+
+        function animateThreeJS() {
+            requestAnimationFrame(animateThreeJS);
+
+            // Rotate particles continuously
+            if (particles) {
+                particles.rotation.y += 0.0005;
+                particles.rotation.x += 0.0002;
+            }
+
+            // Rotate cube continuously
+            const cube = scene.children.find(obj => obj.type === 'Mesh');
+            if (cube) {
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.005;
+            }
+
+            // Camera subtle movement based on mouse
+            camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouse.y * 0.5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize Three.js when the window loads
+        window.onload = function() {
+            initThreeJS();
+            animateThreeJS();
+        };
+    </script>
+</body>
+</html>
